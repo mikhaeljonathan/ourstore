@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: db
+  template:
+    metadata:
+      labels:
+        component: db
+    spec:
+      volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: db-pvc
+      containers:
+        - name: db
+          image: mongo
+          ports:
+            - containerPort: 27017
+          env:
+          # - name: MONGO_INITDB_ROOT_USERNAME
+          #   value: skripsipastia
+          # - name: MONGO_INITDB_ROOT_PASSWORD
+          #   value: bcabca123
+          - name: MONGO_INITDB_DATABASE
+            value: ourstore
+          volumeMounts:
+          - name: db-data
+            mountPath: /data/db

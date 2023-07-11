@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-service
+  annotations:
+    # Replace <ip-name> with the name of your reserved IP address.
+    # Replace <region> with the region where your Kubernetes cluster is located.
+    # <global> can be used instead of <region> for a global static IP.
+    cloud.google.com/load-balancer-ip: static-ip
+spec:
+  type: LoadBalancer
+  selector:
+    component: lb
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 443
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80

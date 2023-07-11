@@ -1,0 +1,113 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Build and Deploy to GKE
+
+on:
+  push:
+    branches:
+    - main
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GAR_LOCATION: asia-southeast2 # region of the Artifact Registry
+  GKE_CLUSTER: ourstore    # gke cluster name
+  GKE_REGION: asia-southeast2   # gke cluster zone
+  REPOSITORY: ourstore-docker 
+  IMAGE_API: api 
+  IMAGE_CLIENT: client
+  DEPLOYMENT_API: api-deployment # deployment name api (backend)
+  DEPLOYMENT_CLIENT: client-deployment # deployment name client (frontend)
+
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Set up nodejs v17.7.1
+      uses: actions/setup-node@v3
+      with:
+        node-version: '17.7.1'
+
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{ secrets.GKE_SA_KEY }}'
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Docker configuration
+      run: |-
+        gcloud --quiet auth configure-docker $GAR_LOCATION-docker.pkg.dev
+
+    - name: Set up GKE credentials
+      run: |-
+        gcloud container clusters get-credentials "$GKE_CLUSTER" --region $GKE_REGION
+    
+    - name: Install gke-gcloud-auth-plugin
+      run: gcloud components install gke-gcloud-auth-plugin
+
+    - name: Testing
+      run: |-
+        cd ourstore-backend
+        npm install
+        npm test
+
+    - name: Build API
+      run: |-
+        cd ourstore-backend
+        docker build \
+          --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_API:$GITHUB_SHA" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
+          .
+    
+    - name: Build Client
+      run: |-
+        cd ourstore-frontend
+        docker build \
+          --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_CLIENT:$GITHUB_SHA" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
+          .
+
+    - name: Push Image to Artifact Registry
+      run: |-
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_API:$GITHUB_SHA"
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_CLIENT:$GITHUB_SHA"
+
+    - name: Set up Kustomize for Deployment
+      run: |-
+        curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+        chmod u+x ./kustomize
+
+    - name: Deploy API and Client
+      run: |-
+        # replacing the image name in the k8s template
+        cd k8s
+        kustomize edit set image image_api=$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_API:$GITHUB_SHA
+        kustomize edit set image image_client=$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_CLIENT:$GITHUB_SHA
+        kustomize build . | kubectl apply -f -
+        kubectl rollout status deployment/$DEPLOYMENT_API
+        kubectl rollout status deployment/$DEPLOYMENT_CLIENT
+        kubectl get services -o wide

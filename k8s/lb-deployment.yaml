@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: lb
+  template:
+    metadata:
+      labels:
+        component: lb
+    spec:
+      containers:
+        - name: db
+          image: asia-southeast2-docker.pkg.dev/ourstore-skripsi/ourstore-docker/nginx-lb
+          ports:
+            - containerPort: 443
+            - containerPort: 80
+            

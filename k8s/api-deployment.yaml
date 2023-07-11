@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: api
+  template:
+    metadata:
+      labels:
+        component: api
+    spec:
+      containers:
+        - name: api
+          image: image_api
+          ports:
+            - containerPort: 5000
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: DB_HOST
+              value: db-cluster-ip-service
+            - name: DB_PORT
+              value: "27017"
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ourstore-secret
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ourstore-secret
+                  key: DB_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: ourstore-secret
+                  key: JWT_SECRET
+            - name: JWT_EXPIRES_IN
+              value: 90d
+            - name: JWT_COOKIE_EXPIRES_IN
+              value: "90"
+            - name: EMAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ourstore-secret
+                  key: EMAIL_USERNAME
+            - name: EMAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ourstore-secret
+                  key: EMAIL_PASSWORD
+            - name: EMAIL_HOST
+              value: smtp.mailtrap.io
+            - name: EMAIL_PORT
+              value: "2525"
+            - name: PROJECT_ID
+              value: ourstore-skripsi
+            - name: KEY_FILENAME
+              valueFrom:
+                secretKeyRef:
+                  name: ourstore-secret
+                  key: KEY_FILENAME
+            - name: BUCKET_NAME
+              value: ourstore-bucket
+            - name: EMAIL_FROM
+              value: ourstore@skripsipastia.xyz
+            - name: SENDGRID_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ourstore-secret
+                  key: SENDGRID_USERNAME
+            - name: SENDGRID_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ourstore-secret
+                  key: SENDGRID_PASSWORD
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ourstore-secret
+                  key: STRIPE_SECRET_KEY
+            - name: FE_HOSTNAME
+              value: skripsipastia.xyz
+            - name: FE_PORT
+              value: "443"
+           

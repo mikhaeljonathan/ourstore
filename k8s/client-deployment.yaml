@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: client
+  template:
+    metadata:
+      labels:
+        component: client
+    spec:
+      containers:
+        - name: client
+          image: image_client
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_BE_HOSTNAME
+              value: skripsipastia.xyz
+            - name: REACT_APP_BE_PORT
+              value: "443"
+           
