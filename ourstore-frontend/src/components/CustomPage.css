@@ -1,0 +1,4 @@
+.hover-section:hover {
+    background-color: var(--hover-section-hover);
+    cursor: pointer;
+}

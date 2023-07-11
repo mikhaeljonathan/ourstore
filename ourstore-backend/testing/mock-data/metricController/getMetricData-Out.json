@@ -1,0 +1,12 @@
+{
+    "status": "success",
+    "data": [
+        {
+            "_id": "6436b482b9e8250be928a57a",
+            "productSoldPerMonth": 123,
+            "revenuePerMonth": 34500000,
+            "dailyActiveUser": 999,
+            "__v": 0
+        }
+    ]
+}

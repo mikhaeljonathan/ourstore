@@ -1,0 +1,9 @@
+{
+    "status": "success",
+    "data": {
+        "name": "product2",
+        "price": 12,
+        "description": "description2",
+        "images": []
+    }
+}

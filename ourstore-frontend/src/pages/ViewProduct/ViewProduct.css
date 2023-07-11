@@ -1,0 +1,53 @@
+.textHeader {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+
+.textFooter {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+
+.colmn {
+    padding: 50px;
+}
+
+.layoutTemplate {
+    background-color: white;
+    padding: 50px;
+}
+
+
+.rowcardLayout {
+    width: fit-content;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.cardTemplate:hover {
+    background-color: var(--template-hover);
+}
+
+.viewProd {
+    background-color: white;
+
+}
+
+.imgSlide {
+    width: 700px;
+    height: 500px;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #000000;
+    background-color: var(--accordion-buttton-not-collapsed);
+}
+
+.accordion-button {
+    color: #000000;
+    background-color: var(--accordion-buttton-collapsed);
+}

@@ -1,0 +1,9 @@
+{
+    "status": "success",
+    "data": {
+        "name": "Menus",
+        "isActive": true,
+        "isInHeader": true,
+        "sections": []
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "status": "success",
+    "data": {
+        "productSoldPerMonth": 1,
+        "revenuePerMonth": 1,
+        "dailyActiveUser": 1
+    }
+}

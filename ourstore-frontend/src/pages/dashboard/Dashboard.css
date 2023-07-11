@@ -1,0 +1,12 @@
+.custom-nav{
+    background-color: var(--primary);
+}
+
+.custom-border {
+    border-left: 5px solid;
+    border-left-color: var(--primary);
+}
+
+.fontItem {
+    color: gray;
+}

@@ -1,0 +1,30 @@
+.background {
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    /* width: 100%; */
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    backdrop-filter: blur(7px);
+}
+
+.text-overlay h1,
+.text-overlay p {
+    color: #fff;
+    text-align: center;
+}

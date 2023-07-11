@@ -1,0 +1,9 @@
+.hidden {
+    display: none;
+}
+
+
+.addPage {
+    display: flex;
+    justify-content: flex-end;
+}

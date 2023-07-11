@@ -1,0 +1,13 @@
+{
+    "status": "success",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDkxZDNkYTkyMjcxMTNhOTZmMGQ5YSIsImlhdCI6MTY4MzczNjc0NCwiZXhwIjoxNjkxNTEyNzQ0fQ.KFfFfmaDKHWwovK9XRjaYNTAfjA8CwfU8bS7pfeR21c",
+    "data": {
+        "user": {
+            "email": "ricky@gmail.com",
+            "username": "antonius ricky",
+            "role": "admin",
+            "passwordChangedAt": "2023-05-07T06:52:38.276Z",
+            "verified": false
+        }
+    }
+}

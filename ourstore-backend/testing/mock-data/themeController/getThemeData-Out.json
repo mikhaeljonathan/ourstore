@@ -1,0 +1,16 @@
+{
+    "status": "success",
+    "data": [
+        {
+            "_id": "640f50b66baf09985fe117a2",
+            "primary": "#c11b31",
+            "secondary": "#17e6a5",
+            "button": "#7a6182",
+            "templateId": "1",
+            "logoLink": "https://storage.googleapis.com/ourstore-bucket/logo-1680759310533.jpeg",
+            "__v": 0,
+            "columnSize": 4,
+            "viewType": "grid"
+        }
+    ]
+}

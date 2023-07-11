@@ -1,0 +1,12 @@
+{
+    "status": "success",
+    "data": {
+        "_id": "63d6366aaf12a7d43916603b",
+        "email": "sdafdsaf@gmail.com",
+        "username": "mjxmjxmjx",
+        "role": "admin",
+        "passwordChangedAt": "2023-04-27T10:26:41.693Z",
+        "__v": 0,
+        "verified": false
+    }
+}

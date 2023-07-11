@@ -1,0 +1,12 @@
+{
+    "status": "success",
+    "data": {
+        "primary": "#f5a623",
+        "secondary": "#cb6113",
+        "templateId": "3",
+        "viewType": "list",
+        "columnSize": 3,
+        "logoLink": "https://storage.googleapis.com/ourstore-bucket/logo-1683040832904.jpeg",
+        "singleProductTemplateId": "3"
+    }
+}

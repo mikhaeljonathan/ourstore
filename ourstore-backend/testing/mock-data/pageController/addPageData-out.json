@@ -1,0 +1,9 @@
+{
+    "status": "success",
+    "data": {
+        "name": "test1",
+        "isActive": false,
+        "isInHeader": false,
+        "sections": []
+    }
+}

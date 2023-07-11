@@ -1,0 +1,16 @@
+{
+    "status": "success",
+    "data": {
+        "_id": "641c68e271c41294efb023e1",
+        "name": "Selis",
+        "price": 500000,
+        "description": "Raleigh is a well-trusted name and one of the best a bicycle brands. Both of these facts are proven by the company’s long tenure.",
+        "images": [
+            {
+                "imageLink": "https://storage.googleapis.com/ourstore-bucket/product-undefined-1679583458744-1.jpeg",
+                "_id": "641c68e271c41294efb023e2"
+            }
+        ],
+        "__v": 0
+    }
+}
